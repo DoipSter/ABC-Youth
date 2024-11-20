@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, ScrollView, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, TextInput, ScrollView, ImageBackground, Animated} from 'react-native';
 
 export default function Tab() {
   const [editableText, setEditableText] = useState([
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#f2d71a', // A bright yellow to contrast with dark background
+    color: '#b6292b', // A bright yellow to contrast with dark background
     marginRight: 15,
   },
   editableText: {
@@ -87,8 +87,8 @@ const styles = StyleSheet.create({
     color: '#333',
     fontFamily: 'Kollektif',
     borderWidth: 2,
-    borderColor: '#f2d71a', // Yellow border for the input field
-    transition: 'all 0.3s ease', // Smooth transition for focus effect
+    borderColor: '#b6292b', // Yellow border for the input field
+//    transition: 'all 0.3s ease', // Smooth transition for focus effect
   },
   editableTextFocused: {
     borderColor: '#b6292b', // Change border color on focus
