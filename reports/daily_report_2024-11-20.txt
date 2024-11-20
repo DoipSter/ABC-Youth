@@ -1,0 +1,17 @@
+Daily Report
+============
+Name       : stemm003
+Date       : Wed Nov 20 11:06:57 PST 2024
+Project    : /mnt/c/Users/saste/Workspace/MobileApps/ABC-Youth
+
+Bugs:
+- Need to ensure workout selection checkboxes are functioning correctly (File: )
+- Need to fix checkboxes on ABC-Youth app workout section is chosen and workout has began (File: )
+- deport.sh and problem.sh are not excutable globally, find a fix. (File: )
+------
+
+Fixes:
+-------
+
+Additional Comments:
+---------------------
