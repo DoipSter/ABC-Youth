@@ -58,6 +58,6 @@ const styles = StyleSheet.create({
   },
   eventDetails: {
     fontSize: 16,
-    color: '#ffffff', // White text
+    color: '#b6292b', // White text
   },
 });
