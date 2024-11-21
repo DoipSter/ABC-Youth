@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   eventName: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#ffffff', // White text for contrast
+    color: '#b6292b', // White text for contrast
     marginBottom: 10,
   },
   eventDetails: {
