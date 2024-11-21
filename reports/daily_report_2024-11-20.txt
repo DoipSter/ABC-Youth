@@ -5,6 +5,8 @@ Date       : Wed Nov 20 11:06:57 PST 2024
 Project    : /mnt/c/Users/saste/Workspace/MobileApps/ABC-Youth
 
 Bugs:
+- Create a mysql database for an account system. (Owner, Admin, Educator, Trainer, student) (File: )
+- Develop or manually input all dependencies for this project. (File: )
 - Need to ensure workout selection checkboxes are functioning correctly (File: )
 - Need to fix checkboxes on ABC-Youth app workout section is chosen and workout has began (File: )
 - deport.sh and problem.sh are not excutable globally, find a fix. (File: )
