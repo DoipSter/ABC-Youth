@@ -69,7 +69,7 @@ export default function TabLayout() {
           fontSize: 36,
           fontWeight: 'bold',
           color: '#B6292B',
-          fontFamily: 'CODE',
+//          fontFamily: 'CODEB',
         },
         headerRight: () => (
           <View style={{ marginRight: 10 }}>

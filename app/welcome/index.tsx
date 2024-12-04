@@ -185,6 +185,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 2,
     textAlign: 'center',
+    fontFamily: 'CODEL',
   },
   loadingContainer: {
     flex: 1,
