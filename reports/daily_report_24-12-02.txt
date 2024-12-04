@@ -1,0 +1,29 @@
+Daily Report
+============
+Name       : Sean Stemm
+Date       : Mon Dec  2 17:04:18 PST 2024
+Project    : /mnt/c/Users/saste/Workspace/MobileApps/ABC-Youth
+
+Bugs:
+- Fixed... an issue with this function, bash script... problem.sh.. i think! TEST (File: )
+------
+1. Bug with workout tab, currently when clicking on workouts that have 3+ sets, and after you progress once into the progress bar, it finishes the one you're currently on and allows you to click on other workouts. Bypassing the finished check.
+2. Just a visual bug, it's annoying how assests, mainly images don't load with the entire project and load on entry into a tab or application section. (different areas of the stack)
+3.
+
+
+Fixes:
+------
+
+Additional Comments:
+--------------------
+Made great progress today.
+1. Connected the main tabular area to the Welcome page.
+2. Within the welcome page, not fully functional yet, but the about us page is displayed with 3 buttons, (abous us, founder, team).
+
+3. Honor Wall
+	-> Added a logout button that will soon act as a drawer to profile, settings, and logout option.
+	-> Added the toggle editting button that is only visible to admins.
+	-> Added refactoring of the containers when the edit button is clicked. 
+	-> Added quotes container that will soon have a button to cycle through a list of quotes.
+	-> 
