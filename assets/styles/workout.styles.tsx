@@ -21,13 +21,6 @@ const styles = StyleSheet.create({
       color: '#fff',
       height: '10%',
     },
-    categoryText: {
-      fontSize: 20, // Adjust the size
-      textAlign: 'center', // Center align the text
-      color: '#fff', // Text color
-      marginVertical: 10, // Spacing between items
-    },
-
     largeText: {
       fontSize: 100,
       fontWeight: 'bold',

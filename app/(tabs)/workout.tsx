@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, ScrollView, Animated, Alert, Vibration, Easing, ActivityIndicator , StatusBar} from 'react-native';
-import styles from '@/assets/styles/index.styles';
+import styles from '@/assets/styles/workout.styles';
 import * as Progress from 'react-native-progress';
 
 export default function Tab() {
@@ -307,29 +307,9 @@ const toggleCategory = (category: string) => {
       <View style={styles.container}>
         {!showCard && !loading && (
           <View style={styles.selectionContainer}>
-            <Text style={styles.promptText}>Pick Your Exercise Day </Text>
+            <Text style={styles.promptText}>Pick Your Exercises </Text>
             <View style={styles.exerciseCategory}>
-              {['A', 'B', 'C', 'D'].map((category) => {
-
-                const isSelected = selectedCategories[category];
-
-                return (
-                <TouchableOpacity
-                  key={category}
-                  style={[
-                    styles.exerciseDay,
-                    isSelected && styles.exerciseDaySelected
-                  ]}
-                  onPress={() => toggleCategory(category)}
-                >
-                  <Text style={[
-                    styles.largeText,
-                    isSelected && styles.largeTextSelected // Apply selected text style dynamically
-                    ]}>
-                    {category}
-                  </Text>
-                </TouchableOpacity>
-              )})}
+              
             </View>
             <Animated.View style={styles.buttonWrapper}>
               <TouchableOpacity style={styles.button} onPress={handleCreateWorkout}>
