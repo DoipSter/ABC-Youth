@@ -1,0 +1,16 @@
+Daily Report
+============
+Name       : Sean Stemm
+Date       : Fri Dec  6 10:02:11 PST 2024
+Project    : /mnt/c/Users/saste/Workspace/MobileApps/ABC-Youth
+
+Bugs:
+------
+
+Fixes:
+------
+
+Additional Comments:
+Commencing the day 12/6/2024 at 10:02:11 am.. and the first issue I'll be tackling today is a node error on the MacBook. 
+
+I'll be attempting to start the application from the Macbook today and praying it's successful.  
