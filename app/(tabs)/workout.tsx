@@ -308,9 +308,9 @@ const toggleCategory = (category: string) => {
         {!showCard && !loading && (
           <View style={styles.selectionContainer}>
             <Text style={styles.promptText}>Pick Your Exercises </Text>
-            <View style={styles.exerciseCategory}>
-              
-            </View>
+            <ScrollView style={styles.exerciseCategory}>
+
+            </ScrollView>
             <Animated.View style={styles.buttonWrapper}>
               <TouchableOpacity style={styles.button} onPress={handleCreateWorkout}>
                 <Text style={styles.buttonText}>Create Boxing Card</Text>

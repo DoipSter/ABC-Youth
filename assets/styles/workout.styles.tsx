@@ -83,13 +83,13 @@ const styles = StyleSheet.create({
       padding: 5,
     },
     exerciseCategory: {
-      flexDirection: 'row',
+      flexDirection: 'column',
       flexWrap: 'wrap',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+//      justifyContent: 'space-between',
+//      alignItems: 'center',
       padding: 10,
     },
-    exerciseDay: {
+    exerciseButton: {
       width: '48%',
       alignItems: 'center',
       borderWidth: 2,
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       marginVertical: 10,
     },
-    exerciseDaySelected: {
+    exerciseButtonSelected: {
       backgroundColor: '#fff',
       borderColor: '#000',
     },
