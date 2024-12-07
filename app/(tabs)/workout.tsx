@@ -18,13 +18,6 @@ export default function Tab() {
     { name: 'SIT-UPS', sets: 1, reps: '100', time: 0, active: false, completed: false, done: false, progressIndex: 0 },
   ]);
 
-  const [selectedCategories, setSelectedCategories] = useState<Record<string, boolean>>({
-    A: false,
-    B: false,
-    C: false,
-    D: false,
-  });
-
   const [mainTime, setMainTime] = useState(0); // Main timer state in milliseconds
   const [mainRunning, setMainRunning] = useState(false); // Is the main timer running
   const [activeWorkout, setActiveWorkout] = useState<number | null>(null); // The current active workout index
@@ -129,20 +122,6 @@ export default function Tab() {
       return updatedWorkouts;
     });
   };
-  
-
-// Toggle category checkbox for the workout selection screen
-const toggleCategory = (category: string) => {
-  setSelectedCategories((prev) => {
-    const updatedCategories: Record<string, boolean> = {...prev};
-    // Set all categories to false except the selected one
-    Object.keys(prev).forEach((key) => {
-      updatedCategories[key] = key === category ? !prev[key] : false;
-    });
-    return updatedCategories;
-  });
-};
-
 
   // "Poof" animation for the button and slide animation for the timer
   const triggerPoofAndSlideAnimation = () => {
@@ -213,12 +192,11 @@ const toggleCategory = (category: string) => {
     setWorkoutStarted(false); // Hide the "End Workout" button
     setMainRunning(false); // Stop the main timer
     setWorkoutEnded(true); // Disable workout buttons
-    setSelectedCategories({ A: false, B: false, C: false, D: false }); // Reset selected categories
     Alert.alert('Workout Completed.', 'Would you like to record todays workout?');
   };
 
   const handleCreateWorkout = () => {
-    const selected = Object.keys(selectedCategories).filter((key) => selectedCategories[key]);
+    const selected = Object.keys(selectedWorkouts).filter((key) => selectedWorkouts[key]);
     if (selected.length === 0) {
       Alert.alert('Please select at least one category');
       return;
@@ -272,7 +250,6 @@ const toggleCategory = (category: string) => {
       completed: false,
       done: false,
     }))); // Reset workouts
-    setSelectedCategories({ A: false, B: false, C: false, D: false }); // Reset selected categories
   };
 
   const startNewWorkout = () => {
@@ -299,6 +276,17 @@ const toggleCategory = (category: string) => {
     }, 500); // .5-second delay
   };
 
+  const handleSelectWorkout = (selectedWorkout, index) => {
+    // Add the selected workout to the workout card
+    setWorkouts((prevWorkouts) => {
+      const updatedWorkouts = [...prevWorkouts];
+      updatedWorkouts[index].active = true; // Mark as active
+      return updatedWorkouts;
+    });
+  
+    // Optionally, if needed, you can update some other state to track selected workouts.
+  };
+
   return (
     <ImageBackground 
     source={require('@/assets/images/abc-youth-gym-bag.png')}
@@ -309,7 +297,15 @@ const toggleCategory = (category: string) => {
           <View style={styles.selectionContainer}>
             <Text style={styles.promptText}>Pick Your Exercises </Text>
             <ScrollView style={styles.exerciseCategory}>
-
+              {workouts.map((workout, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.exerciseButton}
+                  onPress={() => handleSelectWorkout(workout, index)} // Handle workout selection
+                >
+                  <Text style={styles.largeText}>{workout.name}</Text>
+                </TouchableOpacity>
+              ))}
             </ScrollView>
             <Animated.View style={styles.buttonWrapper}>
               <TouchableOpacity style={styles.button} onPress={handleCreateWorkout}>
@@ -349,25 +345,26 @@ const toggleCategory = (category: string) => {
                     }
                   }}
                   disabled={workoutEnded} // Disable after workout ends
-                
                 >
                   <Text style={styles.workoutName}>{workout.name}{'\n'}</Text>
                   <Text style={styles.workoutSetsReps}>{workout.sets} x {workout.reps}</Text>
                   <Text style={styles.workoutTime}>{formatWorkoutTime(workout.time)}{'\n'}</Text>
-                  <View style={{ width: '100%', paddingHorizontal: 20, marginBottom: 5}}>
+                  <View style={{ width: '100%', paddingHorizontal: 20, marginBottom: 5 }}>
                     <Progress.Bar
                       progress={workout.progress}
-                      width={null} //Full Width of the container
+                      width={null} // Full Width of the container
                       height={25}
                       color="#000"
                       unfilledColor="rgba(0,0,0,0.35)"
                       borderWidth={0.35}
                       borderColor='#b6292b'
-                      style={styles.progressBar}/>
+                      style={styles.progressBar}
+                    />
                   </View>
                 </TouchableOpacity>
               ))}
             </ScrollView>
+
             {/* Start Workout Button */}
             {canStartWorkout && (
               <TouchableOpacity style={styles.startWorkoutButton} onPress={handleStartWorkout}>
