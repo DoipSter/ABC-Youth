@@ -1,0 +1,22 @@
+Daily Report
+============
+Name       : Sean Stemm
+Date       : Fri Dec  6 10:02:11 PST 2024
+Project    : /mnt/c/Users/saste/Workspace/MobileApps/ABC-Youth
+
+Bugs:
+------
+1. Fonts are still bugged with a rendering issue. 
+2. Workout section is still bugged.
+3. Still need to fix workout list on Android devices.
+
+Fixes:
+------
+1. Setup environment on MacOS today. Should be ready for a live demo next meeting. 
+
+Additional Comments:
+Commencing the day 12/6/2024 at 10:02:11 am.. and the first issue I'll be tackling today is a node error on the MacBook. 
+
+I'll be attempting to start the application from the Macbook today and praying it's successful.  
+Additional comments added at 5:35 pm.
+Need to learn the ability to change environments/OS on Mac to test on different devices.

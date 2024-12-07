@@ -75,7 +75,7 @@ export default function Welcome() {
       <Modal
         visible={isLoginModalVisible}
         transparent={true}
-        animationType="slide"
+        animationType="fade"
         onRequestClose={() => setLoginModalVisible(false)}
       >
         <View style={styles.modalOverlay}>
@@ -93,6 +93,11 @@ export default function Welcome() {
               placeholderTextColor="#999"
               secureTextEntry={true}
             />
+            <TouchableOpacity
+              onPress={() => setLoginModalVisible(false)}
+              >
+                <Text style={styles.forgotText}>Forgot password?</Text>
+            </TouchableOpacity>
             <TouchableOpacity 
               style={styles.modalButton} 
               onPress={handleLogin}
@@ -105,6 +110,17 @@ export default function Welcome() {
             >
               <Text style={styles.closeButtonText}>Close</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setLoginModalVisible(false);
+
+                setTimeout(() => {
+                  setSignUpModalVisible(true);  // Open the sign-up modal after 1 second
+                }, 600);  // 1000ms = 1 second
+              }}
+              >
+                <Text style={styles.notRegisteredText}> Not Registered? <Text style={styles.createText}>Create an account </Text> </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
@@ -113,7 +129,7 @@ export default function Welcome() {
       <Modal
         visible={isSignUpModalVisible}
         transparent={true}
-        animationType="slide"
+        animationType="fade"
         onRequestClose={() => setSignUpModalVisible(false)}
       >
         <View style={styles.modalOverlay}>
@@ -136,6 +152,12 @@ export default function Welcome() {
               placeholderTextColor="#999"
               secureTextEntry={true}
             />
+            <TextInput
+              style={styles.input}
+              placeholder="Confirm Password"
+              placeholderTextColor="#999"
+              secureTextEntry={true}
+            />
             <TouchableOpacity style={styles.modalButton}>
               <Text style={styles.modalButtonText}>Create Account</Text>
             </TouchableOpacity>
@@ -144,6 +166,17 @@ export default function Welcome() {
               onPress={() => setSignUpModalVisible(false)}
             >
               <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setSignUpModalVisible(false);
+
+                setTimeout(() => {
+                  setLoginModalVisible(true);  // Open the sign-up modal after 1 second
+                }, 600);  // 1000ms = 1 second
+              }}
+              >
+                <Text style={styles.notRegisteredText}> Already Registered? <Text style={styles.createText}>Sign in </Text> </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -185,6 +218,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 2,
     textAlign: 'center',
+    fontFamily: 'CODEL',
   },
   loadingContainer: {
     flex: 1,
@@ -210,7 +244,6 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     borderWidth: 2,
     padding: 20,
-    alignItems: 'center',
   },
   modalTitle: {
     fontSize: 24,
@@ -224,7 +257,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
-    marginBottom: 15,
+    marginBottom: 5,
     backgroundColor: '#f9f9f9',
   },
   modalButton: {
@@ -251,5 +284,26 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  forgotText: {
+    color: '#b6292b',
+    fontSize: 16,
+    marginTop: 0,
+    marginBottom: 10,
+    textDecorationLine: 'underline',
+    textAlign: 'right',
+  },
+  createText: {
+    color: '#b6292b',
+    fontSize: 16,
+    marginTop: 10,
+    marginBottom: 0,
+    textDecorationLine: 'underline',
+    textAlign: 'center',
+  },
+  notRegisteredText: {
+    color: '#999',
+    marginTop: 10,
+    marginBottom: 0,
   },
 });
