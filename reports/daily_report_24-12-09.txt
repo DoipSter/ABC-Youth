@@ -1,0 +1,25 @@
+Daily Report
+============
+Name       : Sean Stemm
+Date       : Mon Dec  9 12:41:56 PST 2024
+Project    : /mnt/c/Users/saste/Workspace/MobileApps/ABC-Youth
+
+Bugs:
+- Small issue with adding a new video on the video tab. Need to figure out a way to center the text box to allow for users to see what they're typing without the background being shrunk. (File: )
+------
+1. When running npx expo-doctor to check for updates, react-native-asset was flagged as untested on new architecture.
+2. When running npx expo-doctor to check for updates, react-native-checkbox was flagged as unmaintained. 
+3. When running npx expo-doctor to check for updates, react-asset was flagged for no meta data found.
+4. 
+
+Fixes:
+------
+
+Additional Comments:
+____________________
+Start: 12:00 Pm 12/9/2024
+
+1. Working on completing about us section and implementing touchable opacities within the 'Our Team' button.
+
+ -> These will include images, a title and a pop-up mod
+2. 
