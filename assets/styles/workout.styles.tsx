@@ -21,20 +21,13 @@ const styles = StyleSheet.create({
       color: '#fff',
       height: '10%',
     },
-    categoryText: {
-      fontSize: 20, // Adjust the size
-      textAlign: 'center', // Center align the text
-      color: '#fff', // Text color
-      marginVertical: 10, // Spacing between items
-    },
-
     largeText: {
-      fontSize: 100,
+      fontSize: 32,
       fontWeight: 'bold',
       color: '#fff',
       textAlign: 'center',
-      marginTop: 10,
-      marginBottom: 10,
+      marginTop: 5,
+      marginBottom: 5,
     },
     buttonWrapper: {
       alignItems: 'center',
@@ -90,22 +83,29 @@ const styles = StyleSheet.create({
       padding: 5,
     },
     exerciseCategory: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+      flexDirection: 'column',
+//      flexWrap: 'wrap',
+//      justifyContent: 'space-between',
+//      alignItems: 'center',
       padding: 10,
+      marginBottom: 100,
+      borderWidth: 0.25,
+      borderColor: '#b6292b',
+      borderRadius: 5,
+      marginRight: 10,
+      marginLeft: 10,
     },
-    exerciseDay: {
-      width: '48%',
+    exerciseButton: {
+      width: '100%',
       alignItems: 'center',
       borderWidth: 2,
       borderColor: '#b6292b',
+      backgroundColor: '#000',
       padding: 10,
       borderRadius: 20,
       marginVertical: 10,
     },
-    exerciseDaySelected: {
+    exerciseButtonSelected: {
       backgroundColor: '#fff',
       borderColor: '#000',
     },

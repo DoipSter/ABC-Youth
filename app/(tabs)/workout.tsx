@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, ScrollView, Animated, Alert, Vibration, Easing, ActivityIndicator , StatusBar} from 'react-native';
-import styles from '@/assets/styles/index.styles';
+import styles from '@/assets/styles/workout.styles';
 import * as Progress from 'react-native-progress';
 
 export default function Tab() {
@@ -18,12 +18,7 @@ export default function Tab() {
     { name: 'SIT-UPS', sets: 1, reps: '100', time: 0, active: false, completed: false, done: false, progressIndex: 0 },
   ]);
 
-  const [selectedCategories, setSelectedCategories] = useState<Record<string, boolean>>({
-    A: false,
-    B: false,
-    C: false,
-    D: false,
-  });
+  const [selectedWorkouts, setSelectedWorkouts] = useState<number[]>([]);
 
   const [mainTime, setMainTime] = useState(0); // Main timer state in milliseconds
   const [mainRunning, setMainRunning] = useState(false); // Is the main timer running
@@ -129,20 +124,6 @@ export default function Tab() {
       return updatedWorkouts;
     });
   };
-  
-
-// Toggle category checkbox for the workout selection screen
-const toggleCategory = (category: string) => {
-  setSelectedCategories((prev) => {
-    const updatedCategories: Record<string, boolean> = {...prev};
-    // Set all categories to false except the selected one
-    Object.keys(prev).forEach((key) => {
-      updatedCategories[key] = key === category ? !prev[key] : false;
-    });
-    return updatedCategories;
-  });
-};
-
 
   // "Poof" animation for the button and slide animation for the timer
   const triggerPoofAndSlideAnimation = () => {
@@ -213,19 +194,22 @@ const toggleCategory = (category: string) => {
     setWorkoutStarted(false); // Hide the "End Workout" button
     setMainRunning(false); // Stop the main timer
     setWorkoutEnded(true); // Disable workout buttons
-    setSelectedCategories({ A: false, B: false, C: false, D: false }); // Reset selected categories
     Alert.alert('Workout Completed.', 'Would you like to record todays workout?');
   };
 
   const handleCreateWorkout = () => {
-    const selected = Object.keys(selectedCategories).filter((key) => selectedCategories[key]);
-    if (selected.length === 0) {
-      Alert.alert('Please select at least one category');
+    // Ensure at least one workout is selected
+    if (selectedWorkouts.length === 0) {
+      Alert.alert('Please select at least one workout');
       return;
     }
-
+  
+    // Filter workouts based on selected indices
+    const filteredWorkouts = selectedWorkouts.map((index) => workouts[index]);
+  
     setLoading(true); // Show the loading animation
     setTimeout(() => {
+      setWorkouts(filteredWorkouts); // Update workouts to only include the selected ones
       setCanStartWorkout(true); // Allow starting the workout
       setShowCard(true); // Show workout card
       setShowCreateButton(false); // Hide the create workout button after creation
@@ -233,6 +217,7 @@ const toggleCategory = (category: string) => {
       setLoading(false); // Hide the loading animation after 500ms
     }, 500); // .5-second delay
   };
+  
 
   const handleStartWorkout = () => {
     Alert.alert(
@@ -262,41 +247,67 @@ const toggleCategory = (category: string) => {
   };
 
   const handleGoBack = () => {
-    setShowCard(false); // Hide workout card
-    setShowCreateButton(true); // Show create button again
-    setShowGoBackButton(false); // Hide Go Back button
-    setWorkouts(workouts.map(workout => ({
-      ...workout,
-      time: 0,
-      active: false,
-      completed: false,
-      done: false,
-    }))); // Reset workouts
-    setSelectedCategories({ A: false, B: false, C: false, D: false }); // Reset selected categories
+    setMainTime(0); // Reset timer
+    setActiveWorkout(null); // Clear active workout
+    setShowCard(false); // Hide the card and return to selection screen
+    setShowCreateButton(true); // Show the create button again
+    setWorkoutStarted(false); // Mark workout as not started
+  
+    // Reset the workout list and clear selections
+    setWorkouts([
+      { name: 'STRETCH-OUT', sets: 1, reps: 1, time: 0, active: false, completed: false, done: false, progressIndex: 0, progress: 0 },
+      { name: 'SHADOW BOX', sets: 3, reps: 'Failure', time: 0, active: false, completed: false, done: false, progressIndex: 0, progress: 0 },
+      { name: 'PUNCHING MITTS', sets: 3, reps: 'Failure', time: 0, active: false, completed: false, done: false, progressIndex: 0, progress: 0 },
+      { name: 'BAG WORK', sets: 3, reps: 'Failure', time: 0, active: false, completed: false, done: false, progressIndex: 0, progress: 0 },
+      { name: 'DOUBLE-END BAG', sets: 3, reps: 'Failure', time: 0, active: false, completed: false, done: false, progressIndex: 0, progress: 0 },
+      { name: 'SPEED BAG', sets: 3, reps: 'Failure', time: 0, active: false, completed: false, done: false, progressIndex: 0, progress: 0 },
+      { name: 'SHADOW BOX', sets: 1, reps: 'Failure', time: 0, active: false, completed: false, done: false, progressIndex: 0, progress: 0 },
+      { name: 'SIT-UPS', sets: 1, reps: '100', time: 0, active: false, completed: false, done: false, progressIndex: 0, progress: 0 },
+    ]); // Restore the workout list
+  
+    setSelectedWorkouts([]); // Clear selections
   };
+  
 
   const startNewWorkout = () => {
     setWorkoutEnded(false);
     setLoading(true); // Start the loading animation
     setMainRunning(false);
+  
     setTimeout(() => {
-      setWorkouts(workouts.map(workout => ({
-        ...workout,
-        time: 0,
-        active: false,
-        completed: false,
-        done: false,
-        progress:0, // Reset Progress
-        progressIndex: 0, // Reset PIndex
-      })));
-      setMainTime(0);
-      setActiveWorkout(null);
+      setWorkouts([
+        // Restore the full list of workouts
+        { name: 'STRETCH-OUT', sets: 1, reps: 1, time: 0, active: false, completed: false, done: false, progressIndex: 0, progress: 0 },
+        { name: 'SHADOW BOX', sets: 3, reps: 'Failure', time: 0, active: false, completed: false, done: false, progressIndex: 0, progress: 0 },
+        { name: 'PUNCHING MITTS', sets: 3, reps: 'Failure', time: 0, active: false, completed: false, done: false, progressIndex: 0, progress: 0 },
+        { name: 'BAG WORK', sets: 3, reps: 'Failure', time: 0, active: false, completed: false, done: false, progressIndex: 0, progress: 0 },
+        { name: 'DOUBLE-END BAG', sets: 3, reps: 'Failure', time: 0, active: false, completed: false, done: false, progressIndex: 0, progress: 0 },
+        { name: 'SPEED BAG', sets: 3, reps: 'Failure', time: 0, active: false, completed: false, done: false, progressIndex: 0, progress: 0 },
+        { name: 'SHADOW BOX', sets: 1, reps: 'Failure', time: 0, active: false, completed: false, done: false, progressIndex: 0, progress: 0 },
+        { name: 'SIT-UPS', sets: 1, reps: '100', time: 0, active: false, completed: false, done: false, progressIndex: 0, progress: 0 },
+      ]); // Reset workouts to full list
+  
+      setSelectedWorkouts([]); // Clear selections
+      setMainTime(0); // Reset timer
+      setActiveWorkout(null); // Clear active workout
       setLoading(false); // Stop the loading animation
-      setShowCard(false); // Show the workout picker again after the loading
-      setShowCreateButton(true); // Make the create button visible
-      setWorkoutStarted(false);
-      setWorkoutEnded(false);
+      setShowCard(false); // Hide the card and return to selection screen
+      setShowCreateButton(true); // Show the create button again
+      setWorkoutStarted(false); // Ensure workout is marked as not started
+      setWorkoutEnded(false); // Ensure workout is marked as not ended
     }, 500); // .5-second delay
+  };
+  
+
+  const handleSelectWorkout = (index:number) => {
+    // Toggle the selected workout
+    setSelectedWorkouts((prevSelected: number[]) => {
+      if (prevSelected.includes(index)) {
+        return prevSelected.filter((i) => i !== index); // Deselect if already selected
+      } else {
+        return [...prevSelected, index]; // Add to selected if not already selected
+      }
+    });
   };
 
   return (
@@ -307,30 +318,29 @@ const toggleCategory = (category: string) => {
       <View style={styles.container}>
         {!showCard && !loading && (
           <View style={styles.selectionContainer}>
-            <Text style={styles.promptText}>Pick Your Exercise Day </Text>
-            <View style={styles.exerciseCategory}>
-              {['A', 'B', 'C', 'D'].map((category) => {
-
-                const isSelected = selectedCategories[category];
-
-                return (
-                <TouchableOpacity
-                  key={category}
-                  style={[
-                    styles.exerciseDay,
-                    isSelected && styles.exerciseDaySelected
+            <Text style={styles.promptText}>Pick Your Exercises </Text>
+            <ScrollView style={styles.exerciseCategory}>
+            {workouts.map((workout, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.exerciseButton,
+                  selectedWorkouts.includes(index) && styles.exerciseButtonSelected, // Apply selected style
+                ]}
+                accessibilityLabel={'Select workout ${workout.name}'}
+                onPress={() => handleSelectWorkout(index)} // Handle workout selection
+              >
+                <Text
+                 style={[
+                  styles.largeText, // Default text style
+                  selectedWorkouts.includes(index) && styles.largeTextSelected, // Apply selected text style
                   ]}
-                  onPress={() => toggleCategory(category)}
                 >
-                  <Text style={[
-                    styles.largeText,
-                    isSelected && styles.largeTextSelected // Apply selected text style dynamically
-                    ]}>
-                    {category}
-                  </Text>
-                </TouchableOpacity>
-              )})}
-            </View>
+                  {workout.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+            </ScrollView>
             <Animated.View style={styles.buttonWrapper}>
               <TouchableOpacity style={styles.button} onPress={handleCreateWorkout}>
                 <Text style={styles.buttonText}>Create Boxing Card</Text>
@@ -369,25 +379,26 @@ const toggleCategory = (category: string) => {
                     }
                   }}
                   disabled={workoutEnded} // Disable after workout ends
-                
                 >
                   <Text style={styles.workoutName}>{workout.name}{'\n'}</Text>
                   <Text style={styles.workoutSetsReps}>{workout.sets} x {workout.reps}</Text>
                   <Text style={styles.workoutTime}>{formatWorkoutTime(workout.time)}{'\n'}</Text>
-                  <View style={{ width: '100%', paddingHorizontal: 20, marginBottom: 5}}>
+                  <View style={{ width: '100%', paddingHorizontal: 20, marginBottom: 5 }}>
                     <Progress.Bar
                       progress={workout.progress}
-                      width={null} //Full Width of the container
+                      width={null} // Full Width of the container
                       height={25}
                       color="#000"
                       unfilledColor="rgba(0,0,0,0.35)"
                       borderWidth={0.35}
                       borderColor='#b6292b'
-                      style={styles.progressBar}/>
+                      style={styles.progressBar}
+                    />
                   </View>
                 </TouchableOpacity>
               ))}
             </ScrollView>
+
             {/* Start Workout Button */}
             {canStartWorkout && (
               <TouchableOpacity style={styles.startWorkoutButton} onPress={handleStartWorkout}>
