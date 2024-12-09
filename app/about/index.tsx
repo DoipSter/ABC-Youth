@@ -8,17 +8,29 @@ export default function About() {
   const [isMissionVisible, setMissionVisible] = useState(false);
   const [isFounderVisible, setFounderVisible] = useState(false);
   const [isTeamVisible, setTeamVisible] = useState(false);
+  const [isBioVisible, setBioVisible] = useState(false);
+  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
 
-  const teamMembers = [
-    { name: 'Billy Moore', image: '@/assets/images/abc-youth-logo-black.png' },
-    { name: 'Terrence Shigg', image: '@/assets/images/abc-youth-logo-black.png' },
-    { name: 'Lemar Slater', image: '@/assets/images/abc-youth-logo-black.png' },
-    { name: 'Terrence Shigg', image: '@/assets/images/abc-youth-logo-black.png'}
-    // Add more members here
+  interface TeamMember{
+    name: string;
+    bio: string;
+  }
+
+  const teamMembers: TeamMember[] = [
+    { name: 'Billy Moore', bio: "Billy Moore's Biograpghy" },
+    { name: 'Terence Shigg', bio: "Terence Shigg's Biography" },
+    { name: 'Any', bio: 'Bob is the lead developer.' },
+    { name: 'Body', bio: 'Bob is the lead developer.' },
+    { name: 'Can', bio: 'Bob is the lead developer.' },
+    { name: 'Youth', bio: 'Bob is the lead developer.' },
+    { name: 'Foundation', bio: 'Bob is the lead developer.' },
   ];
+  
 
-  const handleMemberClick = (member: { name: any; image?: string; }) => {
+  const handleMemberClick = (member: { name: any; bio: string; }) => {
     console.log(`Clicked on ${member.name}`);
+    setSelectedMember(member);
+    setBioVisible(true);
     // Add additional logic here if needed
   };
   
@@ -245,7 +257,6 @@ export default function About() {
       </Modal>
 
       {/* Team Modal */}
-      {/* Team Modal */}
       <Modal
         visible={isTeamVisible}
         transparent={true}
@@ -299,7 +310,36 @@ export default function About() {
           </View>
         </View>
       </Modal>
+      {/* Biography Modal */}
+      <Modal
+        visible={isBioVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setBioVisible(false)}
+      >
+        <View style={styles.bioModalOverlay}>
+          <View style={styles.bioModalContainer}>
+            {/* Biography Content */}
+            <Text style={styles.bioHeaderText}>
+              {selectedMember?.name || 'No Name Available'}
+            </Text>
+            <ScrollView style={styles.bioContent}>
+              <Text style={styles.bioText}>
+                {/* Replace this with the actual biography */}
+                {selectedMember?.bio || 'No Name Available'}
+              </Text>
+            </ScrollView>
 
+            {/* Close Button */}
+            <TouchableOpacity
+              style={styles.bioCloseButton}
+              onPress={() => setBioVisible(false)}
+            >
+              <Text style={styles.bioCloseButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
     </View>
   );
@@ -342,7 +382,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 12,
     overflow: 'hidden',
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: '#000',
   },
   button: {
@@ -427,13 +467,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   buttonNameText: {
-    color: '#fff',
+    color: '#b6292b',
     textAlign: 'center',
     fontSize: 14,
+    fontWeight: 'bold',
   },
   buttonNameBar: {
     padding: 5,
-    backgroundColor: '#b6292b',
+    backgroundColor: '#fff',
   },
   buttonImage: {
     width: '100%',
@@ -455,4 +496,54 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 10,
   },
+  bioModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent overlay
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bioModalContainer: {
+    width: '85%',
+    backgroundColor: '#fff',
+    borderRadius: 15, // Softer corners
+    padding: 25, // More padding for a spacious feel
+    elevation: 10, // Enhanced shadow for a modern look
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+  },
+  bioHeaderText: {
+    fontSize: 24, // Larger font for emphasis
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20, // Create space between header and content
+    color: '#333', // Darker text for better readability
+  },
+  bioContent: {
+    maxHeight: 250, // Slightly larger area for scrollable content
+    marginBottom: 30, // Space between content and button
+    paddingHorizontal: 10, // Padding inside the content area
+  },
+  bioText: {
+    fontSize: 16,
+    textAlign: 'justify', // Justified text for better alignment
+    lineHeight: 22, // Increased line height for readability
+    color: '#555', // Softer color for body text
+  },
+  bioCloseButton: {
+    position: 'relative', // No longer absolute, centered naturally
+    alignSelf: 'center',
+    marginTop: 10, // Add margin to separate button from content
+    paddingVertical: 12, // Larger button size for better touch target
+    paddingHorizontal: 25,
+    backgroundColor: '#000', // Branded color for CTA
+    borderRadius: 8, // Softer corners
+  },
+  bioCloseButtonText: {
+    color: '#fff',
+    fontSize: 18, // Slightly larger font for accessibility
+    fontWeight: 'bold',
+  },
+  
 });
