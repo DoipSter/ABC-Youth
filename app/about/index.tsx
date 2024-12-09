@@ -9,6 +9,21 @@ export default function About() {
   const [isFounderVisible, setFounderVisible] = useState(false);
   const [isTeamVisible, setTeamVisible] = useState(false);
 
+  const teamMembers = [
+    { name: 'Billy Moore', image: '@/assets/images/abc-youth-logo-black.png' },
+    { name: 'Terrence Shigg', image: '@/assets/images/abc-youth-logo-black.png' },
+    { name: 'Lemar Slater', image: '@/assets/images/abc-youth-logo-black.png' },
+    { name: 'Terrence Shigg', image: '@/assets/images/abc-youth-logo-black.png'}
+    // Add more members here
+  ];
+
+  const handleMemberClick = (member: { name: any; image?: string; }) => {
+    console.log(`Clicked on ${member.name}`);
+    // Add additional logic here if needed
+  };
+  
+  
+
   return (
     <View style={styles.blackBG}>
       <ImageBackground
@@ -230,6 +245,7 @@ export default function About() {
       </Modal>
 
       {/* Team Modal */}
+      {/* Team Modal */}
       <Modal
         visible={isTeamVisible}
         transparent={true}
@@ -245,15 +261,32 @@ export default function About() {
                 style={styles.headerImage}
               />
               <Text style={styles.headerText}>
-                {/* Replace this with the title text */}
                 {"Our Team\n"}
-              <Text style={{ color: '#b6292b' }}>
-                {"At ABC"}</Text>
+                <Text style={{ color: '#b6292b' }}>
+                  {"At ABC"}
+                </Text>
               </Text>
             </View>
 
             {/* Scrollable Content */}
             <ScrollView style={styles.modalScrollView}>
+              <View style={styles.buttonsContainer}>
+                {teamMembers.map((member, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={styles.teamButton}
+                    onPress={() => handleMemberClick(member)}
+                  >
+                    <ImageBackground
+                      source={require('@/assets/images/abc-youth-logo-black.png')} // Replace with member.image if you have dynamic images
+                      style={styles.buttonImage}
+                    />
+                    <View style={styles.buttonNameBar}>
+                      <Text style={styles.buttonNameText}>{member.name}</Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </View>
             </ScrollView>
 
             {/* Close Button */}
@@ -266,6 +299,7 @@ export default function About() {
           </View>
         </View>
       </Modal>
+
 
     </View>
   );
@@ -391,5 +425,34 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  buttonNameText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 14,
+  },
+  buttonNameBar: {
+    padding: 5,
+    backgroundColor: '#b6292b',
+  },
+  buttonImage: {
+    width: '100%',
+    height: 100,
+    resizeMode: 'cover',
+  },
+  teamButton: {
+    width: '47%',
+    marginBottom: 10,
+    borderRadius: 8,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    backgroundColor: '#f9f9f9',
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginTop: 10,
   },
 });
