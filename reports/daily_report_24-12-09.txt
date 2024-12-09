@@ -5,6 +5,7 @@ Date       : Mon Dec  9 12:41:56 PST 2024
 Project    : /mnt/c/Users/saste/Workspace/MobileApps/ABC-Youth
 
 Bugs:
+- Small issue with adding a new video on the video tab. Need to figure out a way to center the text box to allow for users to see what they're typing without the background being shrunk. (File: )
 ------
 1. When running npx expo-doctor to check for updates, react-native-asset was flagged as untested on new architecture.
 2. When running npx expo-doctor to check for updates, react-native-checkbox was flagged as unmaintained. 
