@@ -1,0 +1,19 @@
+Daily Report
+============
+Name       : Sean Stemm
+Date       : Thu Dec 12 15:02:06 PST 2024
+Project    : /mnt/c/Users/saste/Workspace/MobileApps/ABC-Youth
+
+Bugs:
+------
+
+
+Fixes:
+------
+
+Additional Comments:
+____________________
+1. Ask Hunter/Terrence who they would like to give access to signing up.. only those who are involved with the program etc.
+2. Todays goal is to come up with a plan on paper for now to understand all the data that will need to be collected and identify areas that input text that will need to be sanitized before uploading/updating the dtb.
+
+3. 

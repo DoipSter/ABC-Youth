@@ -137,7 +137,12 @@ export default function Welcome() {
             <Text style={styles.modalTitle}>Sign Up</Text>
             <TextInput
               style={styles.input}
-              placeholder="Full Name"
+              placeholder="First Name"
+              placeholderTextColor="#999"
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Last Name"
               placeholderTextColor="#999"
             />
             <TextInput
