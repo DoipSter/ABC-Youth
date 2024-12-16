@@ -1,7 +1,7 @@
 Daily Report
 ============
 Name       : Sean Stemm
-Date       : Fri Dec 13 11:57:19 PST 2024
+Date       : Fri Dec 13 17:14:13 PST 2024
 Project    : /mnt/c/Users/saste/Workspace/MobileApps/ABC-Youth
 
 Bugs:
@@ -11,6 +11,3 @@ Fixes:
 ------
 
 Additional Comments:
---------------------
-1. Created firebase account.
-2. Integreating firebase into abc-youth project today.
