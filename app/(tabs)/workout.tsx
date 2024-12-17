@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, ScrollView, Animated, Alert, Vibration, Easing, ActivityIndicator , StatusBar} from 'react-native';
 import styles from '@/assets/styles/workout.styles';
 import * as Progress from 'react-native-progress';
+import { useAdmin } from '@/context/adminContext';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Tab() {
   const [showCard, setShowCard] = useState(false); // Initially hide the card
@@ -31,6 +33,28 @@ export default function Tab() {
   const buttonOpacity = useRef(new Animated.Value(1)).current;
   const buttonScale = useRef(new Animated.Value(1)).current;
   const timerPosition = useRef(new Animated.Value(0)).current; // Position for sliding timer
+    
+  //Admin Logic
+  const { isAdmin } = useAdmin();
+  const [ isEditable, setIsEditable ] = useState(false);
+    
+  const handleEdit = () => {
+        setIsEditable(!isEditable);
+        if (!isEditable) {
+            scrollViewRef.current?.scrollToEnd({ animated: true });
+        } else {
+            scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+        }
+  };
+    
+    const handleInputChange = (index: number, field: string, value: string) => {
+       setWorkouts(prevWorkouts => {
+         const updatedWorkouts = [...prevWorkouts];
+         updatedWorkouts[index][field] = field === 'sets' || field === 'reps' ? (isNaN(Number(value)) ? value : Number(value)) : value;
+         return updatedWorkouts;
+       });
+     };
+
 
   //scrollview logic
   const scrollViewRef = useRef<ScrollView | null>(null);
@@ -319,7 +343,12 @@ export default function Tab() {
         {!showCard && !loading && (
           <View style={styles.selectionContainer}>
             <Text style={styles.promptText}>Pick Your Exercises </Text>
-            <ScrollView style={styles.exerciseCategory}>
+            <ScrollView
+                style={styles.exerciseCategory}
+                ref={scrollViewRef}
+                showsVerticalScrollIndicator={true}
+                contentContainerStyle={styles.scrollContentContainer}
+            >
             {workouts.map((workout, index) => (
               <TouchableOpacity
                 key={index}
@@ -340,12 +369,26 @@ export default function Tab() {
                 </Text>
               </TouchableOpacity>
             ))}
+                                   {isEditable && (
+                                                   <TouchableOpacity style={styles.addButton}>
+                                      <Icon name="plus" size={30} color="#fff" />
+                                    </TouchableOpacity>
+                                   )}
             </ScrollView>
             <Animated.View style={styles.buttonWrapper}>
-              <TouchableOpacity style={styles.button} onPress={handleCreateWorkout}>
+              <TouchableOpacity
+                style={[styles.button, isAdmin && { marginLeft: -80 } ]}         onPress={handleCreateWorkout}>
                 <Text style={styles.buttonText}>Create Boxing Card</Text>
               </TouchableOpacity>
             </Animated.View>
+            {isAdmin && (
+             <TouchableOpacity
+                onPress={handleEdit}
+                style={styles.editButton}
+             >
+               <Icon name={isEditable ? "check" : "pencil"} size={30} color="#fff" />
+             </TouchableOpacity>
+            )}
           </View>
         )}
         {showCard && !loading && (

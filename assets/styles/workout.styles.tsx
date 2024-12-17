@@ -12,6 +12,8 @@ const styles = StyleSheet.create({
       backgroundColor: 'rgba(0, 0, 0, 0.7)',
       width: '90%',
       borderRadius: 20,
+      justifyContent: 'space-between',  // Keeps space between workout list and the button
+      position: 'relative',  // Required for absolute positioning
     },
     promptText: {
       fontSize: 28,
@@ -82,18 +84,22 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       padding: 5,
     },
+    scrollContentContainer: {
+      paddingBottom: 100,
+    },
     exerciseCategory: {
       flexDirection: 'column',
-//      flexWrap: 'wrap',
-//      justifyContent: 'space-between',
-//      alignItems: 'center',
+      flexGrow: 1,  // Ensures the container takes available space
       padding: 10,
-      marginBottom: 100,
+      marginBottom: 90,  // Adjust this as needed based on your design
       borderWidth: 0.25,
       borderColor: '#b6292b',
       borderRadius: 5,
       marginRight: 10,
       marginLeft: 10,
+      minHeight: 0,  // Prevents the container from overflowing
+      flex: 1,  // Ensures that the content inside can expand to fit the screen
+      overflow: 'hidden',  // Ensures items are clipped if they overflow
     },
     exerciseButton: {
       width: '100%',
@@ -103,7 +109,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#000',
       padding: 10,
       borderRadius: 20,
-      marginVertical: 10,
+      marginVertical: 6,
     },
     exerciseButtonSelected: {
       backgroundColor: '#fff',
@@ -241,6 +247,44 @@ const styles = StyleSheet.create({
         { skewX: '-30deg' },
       ],
 //      backgroundColor: '#b6292b',
+    },
+    editButton: {
+        position: 'absolute',
+        bottom: 10,
+        right: 20,
+        padding: 15,
+        backgroundColor: '#000',
+        width: 65,
+        height: 65,
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 1,
+    },
+    addButton: {
+        position: 'absolute',
+        bottom: 30,
+        left: '45%',
+        transform: [{ translateX: -20 }],
+        padding: 0,
+        backgroundColor: '#000',
+        borderRadius: 50,
+        width: 65,
+        height: 65,
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 1,
+    },
+    deleteButton: {
+        position: 'absolute',
+        alignItems: 'center',
+        top: 10,
+        right: 10,
+        padding: 5,
+        backgroundColor: '#b6292b',
+        borderRadius: 50,
+        height: 30,
+        width: 30,
     },
   });
 
