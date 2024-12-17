@@ -4,7 +4,7 @@
     "slug": "ABC-Youth",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon-iphone-home-180.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -15,9 +15,11 @@
     "ios": {
       "newArchEnabled": true,
       "supportsTablet": true,
-      "bundleIdentifier": "com.doip.ABCYouth"
+      "bundleIdentifier": "com.doip.ABCYouth",
+      "buildNumber": "2" 
     },
     "android": {
+      "versionCode" : 2,
       "newArchEnabled": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
