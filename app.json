@@ -2,7 +2,7 @@
   "expo": {
     "name": "ABC-Youth",
     "slug": "ABC-Youth",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon-iphone-home-180.png",
     "scheme": "myapp",
@@ -16,10 +16,10 @@
       "newArchEnabled": true,
       "supportsTablet": true,
       "bundleIdentifier": "com.doip.ABCYouth",
-      "buildNumber": "2" 
+      "buildNumber": "3"
     },
     "android": {
-      "versionCode" : 2,
+      "versionCode" : 3,
       "newArchEnabled": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",

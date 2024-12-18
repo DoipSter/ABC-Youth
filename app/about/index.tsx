@@ -30,7 +30,9 @@ export default function About() {
   const handleMemberClick = (member: { name: any; bio: string; }) => {
     console.log(`Clicked on ${member.name}`);
     setSelectedMember(member);
+    setTeamVisible(false);
     setBioVisible(true);
+    console.log('Bio is Visible:', isBioVisible);
     // Add additional logic here if needed
   };
   
@@ -303,7 +305,7 @@ export default function About() {
             {/* Close Button */}
             <TouchableOpacity
               style={styles.closeButton}
-              onPress={() => setTeamVisible(false)}
+              onPress={() =>  setTeamVisible(false, setBioVisible(false) )}
             >
               <Text style={styles.closeButtonText}>Close</Text>
             </TouchableOpacity>
@@ -333,7 +335,7 @@ export default function About() {
             {/* Close Button */}
             <TouchableOpacity
               style={styles.bioCloseButton}
-              onPress={() => setBioVisible(false)}
+          onPress={() => { setBioVisible(false), setTeamVisible(true) }}
             >
               <Text style={styles.bioCloseButtonText}>Close</Text>
             </TouchableOpacity>
