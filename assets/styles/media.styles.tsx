@@ -7,18 +7,27 @@ const styles = StyleSheet.create({
     flex: 1,
 //    backgroundColor: '#000',
   },
-  videoContainer: {
-    width: '95%',
-    marginVertical: 10,
+  videoWrapper: {
+    width: '93%',
+    alignItems: 'center',
+    justifyContent: 'center',
     alignSelf: 'center',
-    top: 20,
-    borderColor: '#b6292b',
-    borderWidth: 1,
-//    borderRadius: 12,
+    shadowColor: '#b6292b',
+    shadowOffset: {width: 0, height: 4 },
+    shadowOpacity: 2,
+    shadowRadius: 10,
+    elevation: 5,
+  },
+  videoContainer: {
+    width: '100%',
+    marginVertical: 20,
+    borderRadius: 38,
+    overflow: 'hidden',
   },
   video: {
     width: '100%',
-    height: 200, // You can adjust the height as needed
+    height: 200, //
+    resizeMode: 'cover',
   },
   addVideoContainer: {
     flexDirection: 'row',

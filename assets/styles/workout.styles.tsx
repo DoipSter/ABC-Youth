@@ -17,15 +17,16 @@ const styles = StyleSheet.create({
     },
     promptText: {
       fontSize: 28,
-      fontWeight: 'bold',
+      fontFamily: 'CODEPB',
       marginTop: 50,
       textAlign: 'center',
       color: '#fff',
       height: '10%',
     },
     largeText: {
-      fontSize: 32,
+      fontSize: 24,
       fontWeight: 'bold',
+      fontFamily: 'CODEPL',
       color: '#fff',
       textAlign: 'center',
       marginTop: 5,
@@ -41,9 +42,9 @@ const styles = StyleSheet.create({
     },
     button: {
       padding: 15,
-      backgroundColor: '#000', // Darker orange background
-      borderRadius: 15,
-      borderColor: '#b6292b', // White border
+      backgroundColor: '#000', // 
+      borderRadius: 20,
+      borderColor: '#b6292b', // 
       borderWidth: 2,
       alignItems: 'center',
     },
@@ -51,13 +52,13 @@ const styles = StyleSheet.create({
       color: '#FFF', // White text for visibility
       fontSize: 18,
       fontWeight: 'bold',
+      fontFamily: 'CODEPM',
     },
     separator: {
       width: '100%',
-      height: 1,
-      backgroundColor: '#b6292b', // Darker orange separator line
-      marginTop: 10,
-      marginBottom: 20,
+      Height: 1,
+      top: 0,
+      backgroundColor: '#b6292b', // 
     },
     card: {
       width: 350,
@@ -73,6 +74,7 @@ const styles = StyleSheet.create({
     cardTitle: {
       fontSize: 40,
       fontWeight: 'bold',
+      fontFamily: 'CODEPEB',
       marginBottom: 1,
       textAlign: 'center',
       color: '#fff',
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
       flex: 1, // Enable scrolling within the card
       borderWidth: 0.25,
       borderColor: '#b6292b',
-      borderRadius: 10,
+      borderRadius: 20,
       padding: 5,
     },
     scrollContentContainer: {
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
       marginBottom: 90,  // Adjust this as needed based on your design
       borderWidth: 0.25,
       borderColor: '#b6292b',
-      borderRadius: 5,
+      borderRadius: 20,
       marginRight: 10,
       marginLeft: 10,
       minHeight: 0,  // Prevents the container from overflowing
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     exerciseButton: {
       width: '100%',
       alignItems: 'center',
-      borderWidth: 2,
+      borderWidth: 1,
       borderColor: '#b6292b',
       backgroundColor: '#000',
       padding: 10,
@@ -124,7 +126,7 @@ const styles = StyleSheet.create({
       height: 135,
       marginTop: 5,
       padding: 5,
-      borderRadius: 5,
+      borderRadius: 20,
       marginVertical: 3,
       backgroundColor: '#FFF', // White background for workout items
     },
@@ -133,7 +135,7 @@ const styles = StyleSheet.create({
       width: 48, // Adjust width to push timer to the left
       textAlign: 'left',
       color: 'rgba(f,f,f,0.1)',
-//      fontWeight: 'bold',
+      fontFamily: 'CODEPM',
     },
     workoutName: {
       flex: 1,
@@ -145,6 +147,7 @@ const styles = StyleSheet.create({
     workoutSetsReps: {
       fontSize: 16,
       color: '#000',
+      fontFamily: 'CODEPM',
     },
     workoutInactive: {
       backgroundColor: '#a999',
@@ -170,26 +173,28 @@ const styles = StyleSheet.create({
       fontSize: 30,
       fontWeight: 'bold',
       color: '#fff', // Darker orange text for timer
+      fontFamily: 'CODEPB',
     },
     endWorkoutButton: {
       marginTop: 20,
       padding: 15,
       backgroundColor: '#000', // Darker orange background
-      borderRadius: 10,
+      borderRadius: 20,
       borderColor: '#b6292b', // White border
       borderWidth: 1,
       alignItems: 'center',
     },
     endWorkoutButtonText: {
       color: '#FFF', // White text for visibility
-      fontSize: 18,
+      fontSize: 24,
       fontWeight: 'bold',
+      fontFamily: 'CODEPB',
     },
     startNewWorkoutButton: {
       marginTop: 20,
       padding: 15,
       backgroundColor: '#000', // Darker orange background
-      borderRadius: 10,
+      borderRadius: 20,
       borderColor: '#b6292b', // White border
       borderWidth: 2,
       alignItems: 'center',
@@ -198,12 +203,13 @@ const styles = StyleSheet.create({
       color: '#FFF', // White text for visibility
       fontSize: 18,
       fontWeight: 'bold',
+      fontFamily: 'CODEPB',
     },
     goBackButton: {
       marginTop: 20,
       padding: 15,
       backgroundColor: '#000', // Tomato red background for the go back button
-      borderRadius: 10,
+      borderRadius: 20,
       borderColor: '#b6292b', // White border
       borderWidth: 2,
       alignItems: 'center',
@@ -213,6 +219,7 @@ const styles = StyleSheet.create({
       color: '#FFF',
       fontSize: 18,
       fontWeight: 'bold',
+      fontFamily: 'CODEPB',
     },
     loadingContainer: {
       position: 'absolute',
@@ -224,25 +231,27 @@ const styles = StyleSheet.create({
       color: '#fff', // 
       fontSize: 18,
       fontWeight: 'bold',
+      fontFamily: 'CODEPB',
     },
     startWorkoutButton: {
       marginTop: 20,
       padding: 15,
       backgroundColor: '#000', // Darker orange background
-      borderRadius: 10,
+      borderRadius: 20,
       borderColor: '#b6292b', // White border
       borderWidth: 2,
       alignItems: 'center',
     },
     startWorkoutButtonText: {
       color: '#FFF', // White text for visibility
-      fontSize: 18,
+      fontSize: 24,
       fontWeight: 'bold',
+      fontFamily: 'CODEPEB',
     },
     progressBar: {
       marginTop: 1,
       height: 25,
-      borderRadius: 0,
+      borderRadius: 20,
       transform: [
         { skewX: '-30deg' },
       ],

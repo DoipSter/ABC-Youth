@@ -4,6 +4,7 @@ import styles from '@/assets/styles/workout.styles';
 import * as Progress from 'react-native-progress';
 import { useAdmin } from '@/context/adminContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { firebase } from '@react-native-firebase/app';
 
 export default function Tab() {
   const [showCard, setShowCard] = useState(false); // Initially hide the card

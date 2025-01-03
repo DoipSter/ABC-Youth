@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1072549013512",
+    "firebase_url": "https://abc-youth-default-rtdb.firebaseio.com",
+    "project_id": "abc-youth",
+    "storage_bucket": "abc-youth.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072549013512:android:bab6b5d16d58526d81c9bd",
+        "android_client_info": {
+          "package_name": "com.doip.ABCYouth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1072549013512-6shsbvplip38m4vjm61on603qdrbulme.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANv7bqfs-U-m_SSFQ4n-bi6da9JmFdq14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1072549013512-6shsbvplip38m4vjm61on603qdrbulme.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1072549013512-6aut479jnfkkiqg653cj69t43n4vhl5g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doip.ABCYouth"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -72,8 +72,9 @@ export default function Tab() {
             style={styles.scrollContainer}
             contentContainerStyle={{ paddingBottom: 100 }} // Adjust padding for better scrolling when keyboard is open
           >
-            {videoIds.map((videoId, index) => (
-              <View key={index} style={styles.videoContainer}>
+          {videoIds.map((videoId, index) => (
+            <View key={videoId} style={styles.videoWrapper}>
+              <View style={styles.videoContainer}>
                 <WebView
                   style={styles.video}
                   javaScriptEnabled={true}
@@ -94,7 +95,9 @@ export default function Tab() {
                   </TouchableOpacity>
                 )}
               </View>
-            ))}
+            </View>
+          ))}
+
 
             {isEditable && isAdmin && (
               <View style={styles.addVideoContainer}>
@@ -119,7 +122,7 @@ export default function Tab() {
 
           {isAdmin && (
             <TouchableOpacity
-              onPress={() => setIsEditable(prevState => !prevState)} // Toggle isEditable on press
+              onPress={() => setIsEditable(prevState => !prevState)} 
               style={styles.editButton}
             >
               <Icon name={isEditable ? "check" : "pencil"} size={30} color="#fff" />

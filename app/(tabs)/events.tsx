@@ -17,14 +17,15 @@ export default function Tab() {
   const { isAdmin, setIsAdmin } = useAdmin();
   const MAX_EVENTS = 30;
 
-  const [events, setEvents] = useState([
-    {
-      name: "Boxing Event",
-      date: "Nov 25, 2024",
-      location: "Madison Square Garden",
-      image: require('@/assets/images/boxing-ring.png'), // Replace with your image path
-    },
-  ]);
+const [events, setEvents] = useState([
+  {
+    id: '1',  // Unique identifier for each event
+    name: "Boxing Event",
+    date: "Nov 25, 2024",
+    location: "Madison Square Garden",
+    image: require('@/assets/images/boxing-ring.png'),
+  },
+]);
 
   const [isEditable, setIsEditable] = useState(false);
   const scrollViewRef =  useRef<ScrollView | null>(null);
@@ -40,42 +41,46 @@ export default function Tab() {
     }
   };
 
-  const handleDelete = (index: number) => {
-    Alert.alert(
-      "Confirm Deletion",
-      "Are you sure you want to delete this event?",
-      [
-        { text: "Cancel", style: "cancel" },
-        { text: "Delete", onPress: () => deleteEvent(index) },
-      ]
-    );
-  };
-
-  const deleteEvent = (index: number) => {
-    const updatedEvents = events.filter((_, i) => i !== index);
-    setEvents(updatedEvents);
-  };
-
-  const handleAdd = () => {
-    if (events.length >= MAX_EVENTS) {
+    const handleDelete = (eventId: string) => {
       Alert.alert(
-        "Limit Reached",
-        `You cannot add more than ${MAX_EVENTS} events. Please delete an event before adding a new one.`
+        "Confirm Deletion",
+        "Are you sure you want to delete this event?",
+        [
+          { text: "Cancel", style: "cancel" },
+          { text: "Delete", onPress: () => deleteEvent(eventId) },
+        ]
       );
-      return;
-    }
-
-    const newEvent = {
-      name: "New Event",
-      date: "Enter Date",
-      location: "Enter Location",
-      image: require('@/assets/images/boxing-ring.png'), // Default placeholder image
     };
-    setEvents([...events, newEvent]);
-    setTimeout(() => {
-      scrollViewRef.current?.scrollToEnd({ animated: true});
-    }, 100);
-  };
+
+
+    const deleteEvent = (eventId: string) => {
+      const updatedEvents = events.filter(event => event.id !== eventId);
+      setEvents(updatedEvents);
+    };
+
+    const handleAdd = () => {
+      if (events.length >= MAX_EVENTS) {
+        Alert.alert(
+          "Limit Reached",
+          `You cannot add more than ${MAX_EVENTS} events. Please delete an event before adding a new one.`
+        );
+        return;
+      }
+
+      const newEvent = {
+        id: Date.now().toString(), // Unique identifier using the current timestamp
+        name: "New Event",
+        date: "Enter Date",
+        location: "Enter Location",
+        image: require('@/assets/images/boxing-ring.png'), // Default placeholder image
+      };
+
+      setEvents([...events, newEvent]);
+      setTimeout(() => {
+        scrollViewRef.current?.scrollToEnd({ animated: true });
+      }, 100);
+    };
+
 
   return (
     <ImageBackground
@@ -87,60 +92,62 @@ export default function Tab() {
           ref={scrollViewRef}
           contentContainerStyle={styles.scrollContainer}
         >
-          {events.map((event, index) => (
-            <ImageBackground
-              key={index}
-              source={event.image}
-              style={styles.eventContainer}
-              imageStyle={styles.backgroundImage}
+{events.map((event) => (
+  <View key={event.id} style={styles.eventsWrapper}> 
+    <ImageBackground
+      source={event.image}
+      style={styles.eventContainer}
+      imageStyle={styles.backgroundImage}
+    >
+      <View style={styles.overlay}>
+        {isEditable ? (
+          <>
+            <TextInput
+              style={styles.editableText}
+              value={event.name}
+              onChangeText={(text) => {
+                const updatedEvents = [...events];
+                updatedEvents.find(e => e.id === event.id).name = text;
+                setEvents(updatedEvents);
+              }}
+            />
+            <TextInput
+              style={styles.editableText}
+              value={event.date}
+              onChangeText={(text) => {
+                const updatedEvents = [...events];
+                updatedEvents.find(e => e.id === event.id).date = text;
+                setEvents(updatedEvents);
+              }}
+            />
+            <TextInput
+              style={styles.editableText}
+              value={event.location}
+              onChangeText={(text) => {
+                const updatedEvents = [...events];
+                updatedEvents.find(e => e.id === event.id).location = text;
+                setEvents(updatedEvents);
+              }}
+            />
+            <TouchableOpacity
+              onPress={() => handleDelete(event.id)} 
+              style={styles.deleteButton}
             >
-              <View style={styles.overlay}>
-                {isEditable ? (
-                  <>
-                    <TextInput
-                      style={styles.editableText}
-                      value={event.name}
-                      onChangeText={(text) => {
-                        const updatedEvents = [...events];
-                        updatedEvents[index].name = text;
-                        setEvents(updatedEvents);
-                      }}
-                    />
-                    <TextInput
-                      style={styles.editableText}
-                      value={event.date}
-                      onChangeText={(text) => {
-                        const updatedEvents = [...events];
-                        updatedEvents[index].date = text;
-                        setEvents(updatedEvents);
-                      }}
-                    />
-                    <TextInput
-                      style={styles.editableText}
-                      value={event.location}
-                      onChangeText={(text) => {
-                        const updatedEvents = [...events];
-                        updatedEvents[index].location = text;
-                        setEvents(updatedEvents);
-                      }}
-                    />
-                    <TouchableOpacity
-                      onPress={() => handleDelete(index)}
-                      style={styles.deleteButton}
-                    >
-                      <Icon name="trash" size={20} color="#fff" />
-                    </TouchableOpacity>
-                  </>
-                ) : (
-                  <>
-                    <Text style={styles.eventName}>{event.name}</Text>
-                    <Text style={styles.eventDetails}>{event.date}</Text>
-                    <Text style={styles.eventDetails}>{event.location}</Text>
-                  </>
-                )}
-              </View>
-            </ImageBackground>
-          ))}
+              <Icon name="trash" size={20} color="#fff" />
+            </TouchableOpacity>
+          </>
+        ) : (
+          <>
+            <Text style={styles.eventName}>{event.name}</Text>
+            <Text style={styles.eventDetails}>{event.date}</Text>
+            <Text style={styles.eventDetails}>{event.location}</Text>
+          </>
+        )}
+      </View>
+    </ImageBackground>
+  </View>
+))}
+
         </ScrollView>
 
         {isEditable && (

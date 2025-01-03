@@ -62,14 +62,18 @@ export default function Tab() {
       {/* Main content */}
       {!isAdmin && (
         <View style={styles.quoteContainer}>
-         <ImageBackground
-            source={require('@/assets/images/boxing-ring-books.png')}
-            style={styles.quoteImageContainer}
-         >
-          <Text style={styles.quoteText}>
-           "When a TASK is once BEGUN. NEVER leave until it is DONE... If the labor is GREAT or SMALL.. Do it WELL or NOT AT ALL."
-          </Text>
-         </ImageBackground>
+         <View style={styles.quoteImageContainer}>
+          <ImageBackground
+             source={require('@/assets/images/boxing-ring-books.png')}
+             style={styles.imageStyle}
+          >
+           <View style={styles.quoteOverlay}>
+            <Text style={styles.quoteText}>
+             "WHEN A TASK IS ONCE BEGUN, NEVER LEAVE UNTIL IT IS DONE. IF THE LABOR IS GREAT OR SMALL... DO IT WELL, OR NOT AT ALL." - Archie Moore
+            </Text>
+           </View>
+          </ImageBackground>
+         </View>
         </View>
       )}
       <View 

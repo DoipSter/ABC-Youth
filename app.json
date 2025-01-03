@@ -2,25 +2,27 @@
   "expo": {
     "name": "ABC-Youth",
     "slug": "ABC-Youth",
-    "version": "1.0.1",
+    "version": "1.0.8",
     "orientation": "portrait",
-    "icon": "./assets/images/icon-iphone-home-180.png",
+    "icon": "./assets/images/icons-no-border/icon-logo-no-border-home-180.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/images/icon-app-store-1024.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#000"
     },
     "ios": {
       "newArchEnabled": true,
       "supportsTablet": true,
       "bundleIdentifier": "com.doip.ABCYouth",
-      "buildNumber": "3"
+      "buildNumber": "8",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
-      "versionCode" : 3,
+      "versionCode": 8,
       "newArchEnabled": true,
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -33,7 +35,19 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-font",
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      "@react-native-firebase/crashlytics",
+      [
+          "expo-build-properties",
+          {
+              "ios": {
+                  "useFrameworks": "static"
+              }
+          }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

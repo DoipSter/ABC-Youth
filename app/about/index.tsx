@@ -60,6 +60,7 @@ export default function About() {
           </View>
 
           {/* Mission Button */}
+          <View style={styles.wrapper}>
           <ImageBackground
             source={require('@/assets/images/honor_transparent_logo.png')}
             style={styles.buttonImageBackground}
@@ -74,8 +75,10 @@ export default function About() {
               </Text>
             </TouchableOpacity>
           </ImageBackground>
+          </View>
 
           {/* Founder Button */}
+          <View style={styles.wrapper}>
           <ImageBackground
             source={require('@/assets/images/archie-moore-ring.png')}
             style={styles.buttonImageBackground}
@@ -90,8 +93,10 @@ export default function About() {
               </Text>
             </TouchableOpacity>
           </ImageBackground>
+          </View>
 
           {/* Team Button */}
+          <View style={styles.wrapperBottom}>
           <ImageBackground
             source={require('@/assets/images/abc-team.png')}
             style={styles.buttonImageBackground}
@@ -105,6 +110,7 @@ export default function About() {
               </Text>
             </TouchableOpacity>
           </ImageBackground>
+          </View>
         </View>
       </ImageBackground>
 
@@ -368,6 +374,7 @@ const styles = StyleSheet.create({
     left: 20,
     flexDirection: 'row',
     alignItems: 'center',
+    zIndex: 1000,
   },
   backIcon: {
     marginRight: 5,
@@ -377,18 +384,36 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  wrapper: {
+      shadowColor: '#000',
+      shadowRadius: 10,
+      shadowOpacity: 0.8,
+      shadowOffset: { width: 0, height: 4 },
+      elevation: 5,
+  },
+    wrapperBottom: {
+        shadowColor: '#fff',
+        shadowRadius: 7,
+        shadowOpacity: 0.6,
+        shadowOffset: { width: 0, height: 5 },
+        elevation: 5,
+    },
   buttonImageBackground: {
     top: 80,
     height: 200,
     width: '100%',
     marginBottom: 20,
-    borderRadius: 12,
+    borderRadius: 38,
     overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: '#000',
   },
   button: {
     flex: 1,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.8,
+      shadowRadius: 10,
+      // Shadow for Android
+      elevation: 5,
   },
   imageStyle: {
     resizeMode: 'cover',
@@ -398,6 +423,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     fontSize: 30,
     fontWeight: 'bold',
+    fontFamily: 'CODE-Bold',
     textAlign: 'center',
     bottom: 0,
     width: '100%',
@@ -428,12 +454,13 @@ const styles = StyleSheet.create({
   headerImage: {
     width: 150, // Adjust width as needed
     height: 100, // Adjust height as needed
-    borderRadius: 40, // Make it circular
+    borderRadius: 38, // Make it circular
     marginRight: 15, // Add spacing between image and text
   },
   headerText: {
     fontSize: 24, // Larger font size for title
     fontWeight: 'bold',
+    fontFamily: 'CODEPEB',
     color: '#000',
     flex: 1, // Take up remaining space
     textAlign: 'center', // Align text to the left
@@ -441,7 +468,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     width: '80%',
     backgroundColor: '#fff',
-    borderRadius: 12,
+    borderRadius: 38,
     borderColor: '#000',
     borderWidth: 2,
     padding: 20,
@@ -452,6 +479,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'justify',
     marginBottom: 20,
+    fontFamily: 'CODEPM',
   },
   modalScrollView: {
     height: 360,
@@ -461,18 +489,20 @@ const styles = StyleSheet.create({
   closeButton: {
     padding: 10,
     backgroundColor: '#000',
-    borderRadius: 8,
+    borderRadius: 38,
   },
   closeButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+    fontFamily: 'CODEPL',
   },
   buttonNameText: {
     color: '#b6292b',
     textAlign: 'center',
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: 'bold',	
+    fontFamily: 'CODEPEB',
   },
   buttonNameBar: {
     padding: 5,
@@ -486,7 +516,7 @@ const styles = StyleSheet.create({
   teamButton: {
     width: '47%',
     marginBottom: 10,
-    borderRadius: 8,
+    borderRadius: 38,
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: '#ccc',
@@ -521,6 +551,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20, // Create space between header and content
     color: '#333', // Darker text for better readability
+    fontFamily: 'CODEPB',
   },
   bioContent: {
     maxHeight: 250, // Slightly larger area for scrollable content
@@ -532,6 +563,7 @@ const styles = StyleSheet.create({
     textAlign: 'justify', // Justified text for better alignment
     lineHeight: 22, // Increased line height for readability
     color: '#555', // Softer color for body text
+    fontFamily: 'CODEPM',
   },
   bioCloseButton: {
     position: 'relative', // No longer absolute, centered naturally
@@ -540,12 +572,13 @@ const styles = StyleSheet.create({
     paddingVertical: 12, // Larger button size for better touch target
     paddingHorizontal: 25,
     backgroundColor: '#000', // Branded color for CTA
-    borderRadius: 8, // Softer corners
+    borderRadius: 38, // Softer corners
   },
   bioCloseButtonText: {
     color: '#fff',
     fontSize: 18, // Slightly larger font for accessibility
     fontWeight: 'bold',
+    fontFamily: 'CODEPL',
   },
   
 });

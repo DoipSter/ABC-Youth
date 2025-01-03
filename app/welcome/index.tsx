@@ -1,35 +1,168 @@
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
-  StyleSheet,
   Text,
+  ActivityIndicator,
   ImageBackground,
   TouchableOpacity,
-  ActivityIndicator,
   Modal,
   TextInput,
+  Animated,
+  StyleSheet,
+  Vibration,
 } from 'react-native';
-import { useState, useEffect } from 'react';
 import { useRouter, Link } from 'expo-router';
+import {
+  initializeAuth,
+  getReactNativePersistence,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from 'firebase/auth';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+import { initializeApp, getApps } from 'firebase/app';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Import the icon library
+import styles from '@/assets/styles/welcome.styles';
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyDYG1IPmCg9CneBlRwZuPZ5BDQROCmTvNo',
+  authDomain: 'abc-youth.firebaseapp.com',
+  projectId: 'abc-youth',
+  storageBucket: 'abc-youth.firebasestorage.app',
+  messagingSenderId: '1072549013512',
+  appId: '1:1072549013512:ios:10e1b81873706f0a81c9bd',
+};
+
+// Initialize Firebase
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]; // Only initialize if it's not already initialized
+const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+});
 
 export default function Welcome() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoginModalVisible, setLoginModalVisible] = useState(false);
   const [isSignUpModalVisible, setSignUpModalVisible] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [authError, setAuthError] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State to toggle confirm password visibility
+  const shakeAnimation = useRef(new Animated.Value(0)).current; // Ref for shake animation
   const router = useRouter();
 
   useEffect(() => {
-    // Simulate loading time (e.g., fetching resources, loading images)
-    const loadAssets = async () => {
-      // Simulate a delay (use this or remove if you load actual assets)
-      await new Promise((resolve) => setTimeout(resolve, 3000)); // 3-second delay
-      setIsLoading(false); // Set loading to false once done
-    };
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        router.replace('/(tabs)'); // Replace with your main app route
+      } else {
+        setIsLoading(false);
+      }
+    });
 
-    loadAssets();
+    return () => unsubscribe();
   }, []);
 
+  const clearSignUp = () => {
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
+    setAuthError('');
+  };
+
+  const handleLogin = async () => {
+    if (email.length > 24) {
+      setAuthError('Email must be 24 characters or less.');
+      triggerShake();
+      Vibration.vibrate(500);
+      return;
+    }
+  
+    if (password.length > 16) {
+      setAuthError('Password must be 16 characters or less.');
+      triggerShake();
+      Vibration.vibrate(500);
+      return;
+    }
+  
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      clearSignUp();
+      setLoginModalVisible(false);
+      setAuthError('');
+      router.replace('/(tabs)');
+    } catch (error) {
+      let errorMessage = 'Login failed. Please check your credentials.';
+      if (error.code === 'auth/user-not-found') {
+        errorMessage = 'No user found with this email.';
+      } else if (error.code === 'auth/wrong-password') {
+        errorMessage = 'Incorrect password.';
+      }
+      setAuthError(errorMessage);
+      triggerShake();
+      Vibration.vibrate(500);
+    }
+  };
+  
+  const handleSignUp = async () => {
+    if (email.length > 32) {
+      setAuthError('Email must be 32 characters or less.');
+      triggerShake();
+      Vibration.vibrate(500);
+      return;
+    }
+  
+    if (password.length > 32) {
+      setAuthError('Password must be 32 characters or less.');
+      triggerShake();
+      Vibration.vibrate(500);
+      return;
+    }
+  
+    if (password !== confirmPassword) {
+      setAuthError('Passwords do not match.');
+      return;
+    }
+  
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      clearSignUp();
+      setSignUpModalVisible(false);
+      setLoginModalVisible(true);
+      setAuthError('');
+    } catch (error) {
+      setAuthError('Sign-up failed. Please try again.');
+      triggerShake();
+      Vibration.vibrate(500);
+    }
+  };
+
+  const triggerShake = () => {
+    Animated.sequence([
+      Animated.timing(shakeAnimation, {
+        toValue: 10,
+        duration: 50,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shakeAnimation, {
+        toValue: -10,
+        duration: 50,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shakeAnimation, {
+        toValue: 0,
+        duration: 50,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
   if (isLoading) {
-    // Show a loading spinner while app is loading
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#B6292B" />
@@ -38,18 +171,12 @@ export default function Welcome() {
     );
   }
 
-  const handleLogin = () => {
-    setLoginModalVisible(false);
-    router.replace('/(tabs)'); // Navigate to the tabs screen after login
-  };
-
   return (
     <ImageBackground
       source={require('@/assets/images/abc-youth-logo-red.png')}
       style={styles.container}
     >
       <View style={styles.buttonContainer}>
-        {/* Login Button */}
         <TouchableOpacity
           style={styles.button}
           onPress={() => setLoginModalVisible(true)}
@@ -57,7 +184,6 @@ export default function Welcome() {
           <Text style={styles.text}>Login</Text>
         </TouchableOpacity>
 
-        {/* Sign-Up Button */}
         <TouchableOpacity
           style={styles.button}
           onPress={() => setSignUpModalVisible(true)}
@@ -65,250 +191,166 @@ export default function Welcome() {
           <Text style={styles.text}>Sign Up</Text>
         </TouchableOpacity>
 
-        {/* About ABC Link */}
-        <Link href="/about" style={styles.button}>
-          <Text style={styles.text}>ABOUT ABC</Text>
+        <Link href="/about" style={[styles.button, { display: 'flex', alignItems: 'center', justifyContent: 'center' }]}>
+          <Text style={[styles.text, { marginTop: 5 }]}>About ABC</Text>
         </Link>
       </View>
 
-      {/* Login Modal */}
       <Modal
         visible={isLoginModalVisible}
         transparent={true}
         animationType="fade"
-        onRequestClose={() => setLoginModalVisible(false)}
+        onRequestClose={() => {
+          setLoginModalVisible(false);
+          setAuthError('');
+        }}
       >
         <View style={styles.modalOverlay}>
-          <View style={styles.modalContainer}>
+          <Animated.View
+            style={{
+              ...styles.modalContainer,
+              transform: [{ translateX: shakeAnimation }],
+            }}
+          >
             <Text style={styles.modalTitle}>Login</Text>
             <TextInput
               style={styles.input}
               placeholder="Email"
               placeholderTextColor="#999"
               keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
             />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              placeholderTextColor="#999"
-              secureTextEntry={true}
-            />
+            <View style={styles.passwordContainer}>
+              <TextInput
+                style={styles.passwordInput}
+                placeholder="Password"
+                placeholderTextColor="#999"
+                secureTextEntry={!showPassword}
+                value={password}
+                onChangeText={setPassword}
+              />
+              <TouchableOpacity style={styles.passwordIcon}onPress={() => setShowPassword(!showPassword)}>
+                <Icon
+                  name={showPassword ? 'eye-off' : 'eye'}
+                  size={24}
+                  color="#999"
+                />
+              </TouchableOpacity>
+            </View>
+            {authError && <Text style={styles.errorText}>{authError}</Text>}
             <TouchableOpacity
-              onPress={() => setLoginModalVisible(false)}
-              >
-                <Text style={styles.forgotText}>Forgot password?</Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-              style={styles.modalButton} 
+              style={styles.modalButton}
               onPress={handleLogin}
             >
-              <Text style={styles.modalButtonText}>Sign In</Text>
+              <Text style={styles.modalButtonText}>Login</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.closeButton}
-              onPress={() => setLoginModalVisible(false)}
+              onPress={() => {
+                setLoginModalVisible(false);
+                setAuthError('');
+              }}
             >
               <Text style={styles.closeButtonText}>Close</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setLoginModalVisible(false);
-
-                setTimeout(() => {
-                  setSignUpModalVisible(true);  // Open the sign-up modal after 1 second
-                }, 600);  // 1000ms = 1 second
-              }}
-              >
-                <Text style={styles.notRegisteredText}> Not Registered? <Text style={styles.createText}>Create an account </Text> </Text>
-            </TouchableOpacity>
-          </View>
+          </Animated.View>
         </View>
       </Modal>
 
-      {/* Sign-Up Modal */}
       <Modal
         visible={isSignUpModalVisible}
         transparent={true}
         animationType="fade"
-        onRequestClose={() => setSignUpModalVisible(false)}
+        onRequestClose={() => {
+          clearSignUp();
+          setSignUpModalVisible(false);
+        }}
       >
         <View style={styles.modalOverlay}>
-          <View style={styles.modalContainer}>
+          <Animated.View
+            style={{
+              ...styles.modalContainer,
+              transform: [{ translateX: shakeAnimation }],
+            }}
+          >
             <Text style={styles.modalTitle}>Sign Up</Text>
             <TextInput
               style={styles.input}
               placeholder="First Name"
               placeholderTextColor="#999"
+              value={firstName}
+              onChangeText={setFirstName}
             />
             <TextInput
               style={styles.input}
               placeholder="Last Name"
               placeholderTextColor="#999"
+              value={lastName}
+              onChangeText={setLastName}
             />
             <TextInput
               style={styles.input}
               placeholder="Email"
               placeholderTextColor="#999"
               keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
             />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              placeholderTextColor="#999"
-              secureTextEntry={true}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Confirm Password"
-              placeholderTextColor="#999"
-              secureTextEntry={true}
-            />
-            <TouchableOpacity style={styles.modalButton}>
+            <View style={styles.passwordContainer}>
+              <TextInput
+                style={styles.passwordInput}
+                placeholder="Password"
+                placeholderTextColor="#999"
+                secureTextEntry={!showPassword}
+                value={password}
+                onChangeText={setPassword}
+              />
+              <TouchableOpacity style={styles.passwordIcon} onPress={() => setShowPassword(!showPassword)}>
+                <Icon
+                  name={showPassword ? 'eye-off' : 'eye'}
+                  size={24}
+                  color="#999"
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.passwordContainer}>
+              <TextInput
+                style={styles.passwordInput}
+                placeholder="Confirm Password"
+                placeholderTextColor="#999"
+                secureTextEntry={!showConfirmPassword}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+              />
+              <TouchableOpacity style={styles.passwordIcon} onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+                <Icon
+                  name={showConfirmPassword ? 'eye-off' : 'eye'}
+                  size={24}
+                  color="#999"
+                />
+              </TouchableOpacity>
+            </View>
+            {authError && <Text style={styles.errorText}>{authError}</Text>}
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={handleSignUp}
+            >
               <Text style={styles.modalButtonText}>Create Account</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.closeButton}
-              onPress={() => setSignUpModalVisible(false)}
+              onPress={() => {
+                setSignUpModalVisible(false);
+                setAuthError('');
+              }}
             >
               <Text style={styles.closeButtonText}>Close</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setSignUpModalVisible(false);
-
-                setTimeout(() => {
-                  setLoginModalVisible(true);  // Open the sign-up modal after 1 second
-                }, 600);  // 1000ms = 1 second
-              }}
-              >
-                <Text style={styles.notRegisteredText}> Already Registered? <Text style={styles.createText}>Sign in </Text> </Text>
-            </TouchableOpacity>
-          </View>
+          </Animated.View>
         </View>
       </Modal>
     </ImageBackground>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    height: '60%',
-    backgroundColor: '#000',
-  },
-  buttonContainer: {
-    position: 'absolute',
-    bottom: 100,
-    width: '100%',
-    marginTop: 10,
-    paddingTop: 70,
-    alignItems: 'center',
-  },
-  button: {
-    width: '90%',
-    height: '30%',
-    marginVertical: 5,
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    borderColor: '#b6292b',
-    borderWidth: 2,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    color: '#fff',
-    fontSize: 40,
-    fontWeight: 'bold',
-    padding: 2,
-    textAlign: 'center',
-    fontFamily: 'CODEL',
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#000',
-  },
-  loadingText: {
-    fontSize: 20,
-    color: '#B6292B',
-    marginTop: 20,
-  },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-  },
-  modalContainer: {
-    width: '80%',
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    borderColor: '#000',
-    borderWidth: 2,
-    padding: 20,
-  },
-  modalTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  input: {
-    width: '100%',
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginBottom: 5,
-    backgroundColor: '#f9f9f9',
-  },
-  modalButton: {
-    padding: 10,
-    backgroundColor: '#b6292b',
-    borderRadius: 8,
-    width: '100%',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  modalButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  closeButton: {
-    padding: 10,
-    backgroundColor: '#000',
-    borderRadius: 8,
-    width: '100%',
-    alignItems: 'center',
-  },
-  closeButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  forgotText: {
-    color: '#b6292b',
-    fontSize: 16,
-    marginTop: 0,
-    marginBottom: 10,
-    textDecorationLine: 'underline',
-    textAlign: 'right',
-  },
-  createText: {
-    color: '#b6292b',
-    fontSize: 16,
-    marginTop: 10,
-    marginBottom: 0,
-    textDecorationLine: 'underline',
-    textAlign: 'center',
-  },
-  notRegisteredText: {
-    color: '#999',
-    marginTop: 10,
-    marginBottom: 0,
-  },
-});

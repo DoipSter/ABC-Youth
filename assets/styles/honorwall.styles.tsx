@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
       width: '95%',
       height: '60%',
       backgroundColor: 'rgba(0, 0, 0, 0.7)',
-      borderRadius: 20,
+      borderRadius: 38,
       marginTop: 10,
       padding: 20,
       justifyContent: 'flex-start',
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       marginBottom: 10,
       padding: 15,
-      borderRadius: 15,
+      borderRadius: 38,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 4 },
       shadowOpacity: 0.2,
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     imageContainer: {
       width: 50,
       height: 50,
-      borderRadius: 25,
+      borderRadius: 38,
       borderWidth: 2,
       borderColor: '#b6292b',
       backgroundColor: '#fff',
@@ -58,43 +58,60 @@ const styles = StyleSheet.create({
     quoteContainer: {
       width: '93%',
       height: '33%',
-      backgroundColor: 'rgba(0,0,0,0.8)',
-      justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: 80,
-      borderWidth: 1,
-//      borderColor: '#b6292b',
+      justifyContent: 'center',
+      borderRadius: 38,
+      overflow: 'hidden',
+        
+      // Shadow properties for iOS
+      shadowColor: '#000', // Black shadow
+      shadowOffset: { width: 0, height: 0 }, // Offset for the shadow
+      shadowOpacity: 2, // Transparency of the shadow
+      shadowRadius: 5, // Blur radius of the shadow
+      //Shadow for Android:
+      elevation: 5,
+
     },
     quoteImageContainer: {
-      height: '95%',
-      backgroundColor: 'rgba(0,0,0,0.5)',
+
+      width: '95%',
+      height: '93%',
+      borderRadius: 38,
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: 80,
-      overflow: 'hidden',
-      resizeMode: 'cover',
+    },
+    imageStyle: {
+      width: '100%', // Image takes 95% of the parent container's width
+      height: '100%', // Image takes 95% of the parent container's height
+      resizeMode: 'cover', // Ensures image covers the area without distortion
+        borderRadius: 38,
+        overflow: 'hidden',
+    },
+    quoteOverlay: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: 'rgba(0,0,0,0.6)', // Dark overlay for quote text
     },
     quoteText: {
       textAlign: 'center',
-      backgroundColor: 'rgba(0,0,0,0.7)',
       color: '#f4f4f4',
-      fontSize: 28,
-      fontWeight: 'bold',
-//      fontFamily: 'CODEL',
-      marginLeft: 3,
-      marginRight: 3,
+      fontSize: 24,
+      marginLeft: 1,
+      marginRight: 1,
+      marginTop: 23,
+      fontFamily: 'CODEPL',
     },
+
     image: {
       width: '100%',
       height: '100%',
       resizeMode: 'cover',
-      borderRadius: 25,
+      borderRadius: 38,
       opacity: 0.7,
     },
     editableText: {
       fontSize: 28,
       fontWeight: 'bold',
-//      fontFamily: 'CODEB',
+      fontFamily: 'CODEPL',
       flex: 1,
       height: 50,
       marginLeft: 10,
